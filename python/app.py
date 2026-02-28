@@ -3,7 +3,7 @@ import pickle
 import numpy as np
 
 # Load Trained Model
-with open("../ml_model/Linear_Regression.pkl", "rb") as f:
+with open("/ml_model/Linear_Regression.pkl", "rb") as f:
     model = pickle.load(f)
 
 # App Title
