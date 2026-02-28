@@ -4,12 +4,20 @@ import seaborn as sns
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
+import pickle
 
 data = pd.read_csv("dataset\cleaned_student_performance.csv")
 
 data.drop(columns =["student_ID","previous_sem_CGPA"], inplace=True)
 
-x = data.drop("current_sem_CGPA", axis=1)
+x = data[[
+    "daily_screen_time_hours",
+    "online_study_hours",
+    "sleep_hours",
+    "attendance_percentage",
+    "offline_study_hours"
+]]
+
 y = data["current_sem_CGPA"]
 
 #split the data into training and testing sets
@@ -29,6 +37,9 @@ print(f"Mean Squared Error: {mse}")
 print(f"R^2 Score: {r2}")
 print(f"Mean Absolute Error: {mae}")
 
+print(x.columns)
+print(len(x.columns))
+
 # Plotting actual vs predicted values
 plt.figure(figsize=(10, 6))
 sns.scatterplot(x=y_test, y=y_pred)
@@ -38,3 +49,7 @@ plt.title("Actual vs Predicted CGPA")
 plt.plot([y.min(), y.max()], [y.min(), y.max()], 'r--') 
 plt.savefig("plots/actual_vs_predicted.png")
 plt.show()
+
+# # Save the trained model
+with open("ml_model/Linear_Regression.pkl", "wb") as f:
+    pickle.dump(model, f)
