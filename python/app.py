@@ -1,9 +1,15 @@
 import streamlit as st
 import pickle
 import numpy as np
+import os
 
-# Load Trained Model
-with open("/ml_model/Linear_Regression.pkl", "rb") as f:
+# Get absolute path of current file
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# Build correct path to model
+model_path = os.path.join(BASE_DIR, "..", "ml_model", "Linear_Regression.pkl")
+
+with open(model_path, "rb") as f:
     model = pickle.load(f)
 
 # App Title
